@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css';
 
 function Home() {
 
-  const[deck, setDeck]=useState([
+  const [deck,setDeck]=useState([
     { id: 1, name: 'billiard ball', image: '/billiardball.svg' },
     { id: 2, name: 'billiard ball', image: '/billiardball.svg' },
     { id: 3, name: 'bubble tea', image: '/bubbletea.svg' },
@@ -22,28 +22,22 @@ function Home() {
     { id: 15, name: 'sunglasses', image: '/sunglasses.svg' },
     { id: 16, name: 'sunglasses', image: '/sunglasses.svg' },
 ])
-  const [temporaryDeck, setTemporary]=useState([])
-  const [randomedDeck, setRandomedDeck]=useState([])
+
+ 
   const [selected, setSelected] = useState([]);
   const [winned, setWinned] = useState([]);
   
   
+  const resetGame = () => {
+    const randomedDeck = deck.sort(() => 0.5 - Math.random());
+    setDeck(randomedDeck);
+    setSelected([]);
+    setWinned([]);
+  };
+
   useEffect(() => {
-    setTemporary(deck)
-    let i=1
-    while(i <= temporaryDeck.length)
-    {
-      // get random data & push in randomedarray
-      let randomOne=temporaryDeck[Math.floor(Math.random()*temporaryDeck.length)]
-      setRandomedDeck([...randomedDeck,randomOne])
-      //console.log('randomone',randomOne)
-      //randomedDeck.push(randomOne)
-      // delete data
-      setTemporary(temporaryDeck.filter((element) => element.id != randomOne.id))
-      i++
-    }
-    
-  },[randomedDeck]);
+    resetGame();
+  }, [deck]);
 
 
   useEffect(() => {
@@ -51,8 +45,8 @@ function Home() {
     if (selected.length == 2)
     {
      console.log(selected)
-     let firstcard=randomedDeck.find((element) => element.id == selected[0])
-     let secondcard=randomedDeck.find((element) => element.id == selected[1])
+     let firstcard=deck.find((element) => element.id == selected[0])
+     let secondcard=deck.find((element) => element.id == selected[1])
 
       if (firstcard.name == secondcard.name)
       {
@@ -72,28 +66,30 @@ function Home() {
        
       }
     }
-    console.log('deck',randomedDeck)
-    console.log('winned',winned)
-
   
 
   },[selected]);
   
+  useEffect(() => {
   if(winned.length == 16)
     {
       setTimeout(() => {
         setWinned([])
         
-        setRandomedDeck([])
+        setDeck([])
+        resetGame()
       }, "1500")
     }
+  },[winned])
 
   const selectCard = (id) => {
     setSelected([...selected, id]);
    
   };
 
-  const cardsToDisplay = randomedDeck.map((card) => {
+
+
+  const cardsToDisplay = deck.map((card) => {
     return (
       <Card
         key={card.id}
