@@ -59,9 +59,9 @@ card:hover .cardBack {
 {
   
   .card {
-    height: 80px;
-    width: 80px;
-    margin: 20px;
+    height: 4rem;
+    width: 4rem;
+    margin: 1rem;
     background: transparent;
     cursor: pointer;
     perspective: 1000px;
