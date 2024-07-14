@@ -5,6 +5,7 @@
   background: transparent;
   cursor: pointer;
   perspective: 1000px;
+
 }
 
 .card.active {
@@ -52,4 +53,20 @@ card:hover .cardBack {
 .cardFront {
   background-color: rgb(76, 82, 87);
   border: 2px solid rgb(76, 82, 87);
+}
+
+@media (max-width: 578px) 
+{
+  
+  .card {
+    height: 80px;
+    width: 80px;
+    margin: 20px;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1000px;
+
+  }
+
+  
 }
